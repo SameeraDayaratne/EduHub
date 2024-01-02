@@ -1,4 +1,3 @@
-import { Children } from "react"
 import Sidebar from "./components/sidebar/Sidebar"
 import StudentPage from "./pages/StudentPage"
 import TeachersPage from "./pages/TeachersPage"
