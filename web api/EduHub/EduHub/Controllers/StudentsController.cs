@@ -28,10 +28,10 @@ namespace EduHub.Controllers
             List<object> students = new List<object>();
             _connection = new SqlConnection(this._configuration.GetConnectionString("DefaultConnection"));
 
-            string cmd = "SELECT Students.StudentID, Students.FirstName, Students.LastName, Students.ContactPerson, Students.ContactNo, Students.EmailAddress, Students.DateOfBirth, Students.Age,  Classroom.ClassName FROM Students JOIN Classroom ON Students.ClassroomID = Classroom.ClassroomID";
+            string query = "SELECT Students.StudentID, Students.FirstName, Students.LastName, Students.ContactPerson, Students.ContactNo, Students.EmailAddress, Students.DateOfBirth, Students.Age,  Classroom.ClassName FROM Students JOIN Classroom ON Students.ClassroomID = Classroom.ClassroomID";
 
             DataTable dt = new DataTable();
-            _command = new SqlCommand(cmd, _connection);
+            _command = new SqlCommand(query, _connection);
             _connection.Open();
 
             SqlDataAdapter adapter = new SqlDataAdapter(_command);
@@ -66,8 +66,21 @@ namespace EduHub.Controllers
 
         // POST api/<StudentsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult CreateStudent([FromBody] Student student)
         {
+            _connection = new SqlConnection(this._configuration.GetConnectionString("DefaultConnection"));
+            string query = $@"
+                INSERT INTO Students (FirstName, LastName, ContactPerson, ContactNo, EmailAddress, DateOfBirth, Age, ClassroomId)
+                VALUES ('{student.FirstName}', '{student.LastName}', '{student.ContactPerson}', '{student.ContactNo}', '{student.EmailAddress}', '{student.DateOfBirth}', {student.Age}, {student.ClassroomId});
+            ";
+
+            _command = new SqlCommand(query, _connection);
+            _connection.Open();
+            _command.ExecuteNonQuery();
+            _connection.Close();
+
+
+            return Ok(new { Message = "Student Created"});
         }
 
         // PUT api/<StudentsController>/5
