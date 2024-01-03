@@ -37,7 +37,7 @@ function Sidebar(props) {
                     <h2>Developed by Sameera Dayaratne</h2>
                 </div>
             </div>
-            <div className='w-full bg-themeBg2 border-2 border-borderColor2 rounded-2xl p-8'>
+            <div className='w-full bg-themeBg2 border-2 border-borderColor2 rounded-2xl p-8 overflow-auto'>
                 <Outlet />
             </div>
             

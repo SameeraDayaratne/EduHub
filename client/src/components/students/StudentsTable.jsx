@@ -20,10 +20,7 @@ function StudentsTable(props) {
     const data = useMemo(() => mdata , []);
 
     const columns = [
-        {
-            header: 'ID',
-            accessorKey : 'id'
-        },
+       
         {
             header: 'First Name',
             accessorKey : 'first_name'
@@ -60,30 +57,34 @@ function StudentsTable(props) {
 
     const table = useReactTable({data , columns ,getCoreRowModel : getCoreRowModel() , getPaginationRowModel:getPaginationRowModel()} );
     return (
-        <div>
-            <table>
-                <thead>
+        <div className='mt-5 lg:block'>
+            <table className='w-full'>
+                <thead className='bg-activeNavLink hidden lg:table-header-group'>
                     {table.getHeaderGroups().map(headerGroup => (
                         <tr key={headerGroup.id}> 
-                            {headerGroup.headers.map(header => <th key={header.id}>{flexRender(header.column.columnDef.header , header.getContext())}</th>)}
+                            {headerGroup.headers.map(header => <th className='p-1 py-2  tracking-wide text-left' key={header.id}>{flexRender(header.column.columnDef.header , header.getContext())}</th>)}
                         <th>Edit</th>
                         </tr>
                     ))}
                 </thead>
                 <tbody>
+                    {/* {table.getRowModel().rows.map(row => (row.getVisibleCells().map(cell =>(console.log('c' ,cell)))) ) } */}
                     {table.getRowModel().rows.map(row => (
-                        <tr key={row.id}>{row.getVisibleCells().map(cell => (
-                            <td key={cell.id} > {flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                        <tr className='odd:bg-activeNavLinkHover even:bg-activeNavLink ' key={row.id}>{row.getVisibleCells().map(cell => (
+                            <td data-cell={`${cell.column.columnDef.header} : `} className='p-1 py-2 tracking-wide text-left block lg:table-cell before:content-[attr(data-cell)] before:font-semibold lg:before:content-[""]' key={cell.id} > {flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
                         ))}
-                        <td> haha</td>
+                        <td className='p-1 py-2 tracking-wide text-left block lg:table-cell'> haha</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            <div>
             <button onClick={() => table.setPageIndex(0) }>First Page</button>
             <button disabled={!table.getCanPreviousPage} onClick={() => table.previousPage()}>Prev Page</button>
             <button disabled={!table.getCanNextPage()} onClick={() => table.nextPage()}>Next Page</button>
             <button onClick={() => table.setPageIndex(table.getPageCount() - 1)}>Last Page</button>
+            </div>
+            
         </div>
     );
 }
