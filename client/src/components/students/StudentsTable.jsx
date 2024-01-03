@@ -78,7 +78,7 @@ function StudentsTable(props) {
                     ))}
                 </tbody>
             </table>
-            <div>
+            <div className='flex justify-center'>
             <button onClick={() => table.setPageIndex(0) }>First Page</button>
             <button disabled={!table.getCanPreviousPage} onClick={() => table.previousPage()}>Prev Page</button>
             <button disabled={!table.getCanNextPage()} onClick={() => table.nextPage()}>Next Page</button>
