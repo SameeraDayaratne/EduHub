@@ -88,14 +88,49 @@ namespace EduHub.Controllers
 
         // PUT api/<StudentsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] Student student)
         {
+            _connection = new SqlConnection(this._configuration.GetConnectionString("DefaultConnection"));
+            string query = $@"
+                UPDATE Students
+                SET FirstName = '{student.FirstName}',
+                    LastName = '{student.LastName}',
+                    ContactPerson = '{student.ContactPerson}',
+                    ContactNo = '{student.ContactNo}',
+                    EmailAddress = '{student.EmailAddress}',
+                    DateOfBirth = '{student.DateOfBirth}',
+                    Age = {student.Age},
+                    ClassroomId = {student.ClassroomId}
+                WHERE StudentId = {id};
+            ";
+
+            _command = new SqlCommand(query, _connection);
+            _connection.Open();
+            int x = _command.ExecuteNonQuery();
+            if(x > 0)
+            {
+                return Ok(new { Message = "Student Updated" });
+            }
+            return BadRequest(new { Message = "Student Not Found" });
+
         }
 
         // DELETE api/<StudentsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            _connection = new SqlConnection(this._configuration.GetConnectionString("DefaultConnection"));
+            string query = $@"
+                DELETE from Students WHERE StudentId = {id}";
+
+            _command = new SqlCommand(query, _connection);
+            _connection.Open();
+            int x = _command.ExecuteNonQuery();
+            if (x > 0)
+            {
+                return Ok(new { Message = "Student Deleted" });
+            }
+            return BadRequest(new { Message = "Student Not Found" });
         }
     }
 }
