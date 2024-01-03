@@ -3,7 +3,7 @@ import {useReactTable ,getCoreRowModel , flexRender , getPaginationRowModel} fro
 import mdata from '../../util/mockdata.js'
 import React, { useMemo } from 'react';
 
-function StudentsTable(props) {
+function StudentsTable({students}) {
 
     /* 
      {
@@ -17,46 +17,48 @@ function StudentsTable(props) {
     age: 6,
     classroom: "Goldenrod",
   },*/
-    const data = useMemo(() => mdata , []);
+    const data = useMemo(() => students , [students]);
+    
 
     const columns = [
        
         {
             header: 'First Name',
-            accessorKey : 'first_name'
+            accessorKey : 'FirstName'
         },
         {
             header: 'Last Name',
-            accessorKey : 'last_name'
+            accessorKey : 'LastName'
         },
         {
             header: 'Contact Person',
-            accessorKey : 'contact_person'
+            accessorKey : 'ContactPerson'
         },
         {
             header: 'Contact Number',
-            accessorKey : 'contact_no'
+            accessorKey : 'ContactNo'
         },
         {
             header: 'Email',
-            accessorKey : 'email'
+            accessorKey : 'EmailAddress'
         },
         {
             header: 'DOB',
-            accessorKey : 'date_of_brith'
+            accessorKey : 'DateOfBirth'
         },
         {
             header: 'Age',
-            accessorKey : 'age'
+            accessorKey : 'Age'
         },
         {
             header: 'classroom',
-            accessorKey : 'classroom'
+            accessorKey : 'ClassName'
         },
     ]
 
     const table = useReactTable({data , columns ,getCoreRowModel : getCoreRowModel() , getPaginationRowModel:getPaginationRowModel()} );
     return (
+        
         <div className='mt-5 lg:block'>
             <table className='w-full'>
                 <thead className='bg-activeNavLink hidden lg:table-header-group'>
