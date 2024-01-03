@@ -64,7 +64,8 @@ export default function Input({
                     onBlur={(e) => (e.target.type = "text")}
                     
                 />}
-                {id == 'classroom' ? <select className={inputClass()}  >
+                {id == 'classroom' ? <select name={name} className={inputClass()}  >
+                <option disabled={true} value="">Select a Classroom</option>
                 {classrooms.map(classroom => (
                     <option key={classroom.ClassroomId} value={classroom.ClassroomId}>{classroom.ClassName}</option>
                 ))}

@@ -1,16 +1,35 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MdClose } from "react-icons/md";
 import { useState } from 'react';
 import Input from '../input/input';
-import {Form} from 'react-router-dom'
+import {Form ,useNavigation ,useActionData ,useNavigate} from 'react-router-dom'
 import useFetch from '../../hooks/useFetch';
+import axios from 'axios';
 
 function StudentModal({closeModal}) {
 
   const { data:classrooms , isLoading , error } = useFetch("http://localhost:5251/api/Classrooms");
-  console.log('dat' ,classrooms);
+
+
+  const navigation = useNavigation();
+
+  const isAddingStudent = navigation.state === "submitting";
+
+  
+
+
+  // useEffect(()=>{
+  //   // console.log('datasss' , data);
+  //   // if((data && data.Message) && data.Message == 'Student Created') 
+  //   // {
+  //   //   closeModal();
+  //   //   // fetchData("http://localhost:5251/api/Students");
+  //   //   navigate('/students')
+  //   // }
+  // } ,[data,data.Message , closeModal , navigate]);
+  
     const [form, setForm] = useState([
         {
           id: "first-name",
@@ -95,6 +114,7 @@ function StudentModal({closeModal}) {
                     
                     <Form
                   method="post"
+                  action="/students"
                   className="rounded-lg shadow-hard-gray"
                 >
                   <div className="grid grid-cols-2 gap-2 px-8 py-5 text-sm  items-center">
@@ -134,7 +154,7 @@ function StudentModal({closeModal}) {
                       
                       className="bg-colorBlue font-semibold text-sm text-white py-2  rounded-lg text-center w-full uppercase "
                     >
-                      {/* {isSigningUp ? "Signing Up" : "Sign Up"} */} Add Student
+                      {isAddingStudent ? "Adding Student" : "Add Student"} 
                     </button>
                   </div>
                  
@@ -148,3 +168,5 @@ function StudentModal({closeModal}) {
 }
 
 export default StudentModal;
+
+
