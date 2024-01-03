@@ -2,8 +2,10 @@
 import {useReactTable ,getCoreRowModel , flexRender , getPaginationRowModel} from '@tanstack/react-table'
 import mdata from '../../util/mockdata.js'
 import React, { useMemo } from 'react';
+import { FaRegEdit } from "react-icons/fa";
+import { MdOutlineDelete } from "react-icons/md";
 
-function StudentsTable({students}) {
+function StudentsTable({students , handleEdit}) {
 
     /* 
      {
@@ -56,6 +58,7 @@ function StudentsTable({students}) {
         },
     ]
 
+
     const table = useReactTable({data , columns ,getCoreRowModel : getCoreRowModel() , getPaginationRowModel:getPaginationRowModel()} );
     return (
         
@@ -65,17 +68,24 @@ function StudentsTable({students}) {
                     {table.getHeaderGroups().map(headerGroup => (
                         <tr key={headerGroup.id}> 
                             {headerGroup.headers.map(header => <th className='p-1 py-2  tracking-wide text-left' key={header.id}>{flexRender(header.column.columnDef.header , header.getContext())}</th>)}
-                        <th>Edit</th>
+                        <th>Edit/Delete</th>
                         </tr>
                     ))}
                 </thead>
                 <tbody>
                     {/* {table.getRowModel().rows.map(row => (row.getVisibleCells().map(cell =>(console.log('c' ,cell)))) ) } */}
                     {table.getRowModel().rows.map(row => (
+                        
                         <tr className='odd:bg-activeNavLinkHover even:bg-activeNavLink ' key={row.id}>{row.getVisibleCells().map(cell => (
                             <td data-cell={`${cell.column.columnDef.header} : `} className='p-1 py-2 tracking-wide text-left block lg:table-cell before:content-[attr(data-cell)] before:font-semibold lg:before:content-[""]' key={cell.id} > {flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
                         ))}
-                        <td className='p-1 py-2 tracking-wide text-left block lg:table-cell'> haha</td>
+                        <td className='p-1 py-2 tracking-wide text-left block lg:table-cell'>
+                            <div className='flex  gap-3 items-center'>
+                            <FaRegEdit onClick={() => handleEdit(row.original)} className='cursor-pointer opacity-50 hover:opacity-100' />
+                            <MdOutlineDelete onClick={() => handleDelete(row.original)} className='cursor-pointer opacity-50 hover:opacity-100' size={20} />
+                            </div>
+                            
+                        </td>
                         </tr>
                     ))}
                 </tbody>

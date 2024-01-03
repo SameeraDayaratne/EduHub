@@ -12,6 +12,7 @@ import {Form ,useNavigation ,useActionData ,useNavigate ,redirect} from 'react-r
 function StudentPage(props) {
 
     const [isModalOpen , setIsModalOpen] = useState(false);
+    const [editingStudent , setEditingStudent] = useState(null);
     const { data:students , isLoading , error , fetchData } = useFetch("http://localhost:5251/api/Students");
 
     const data = useActionData()
@@ -49,7 +50,16 @@ function StudentPage(props) {
     }
 
     function closeModal() {
+        if(editingStudent){
+            setEditingStudent(null);
+        }
         setIsModalOpen(false);
+        
+    }
+
+    function handleEdit(data){
+        setEditingStudent(data)
+        setIsModalOpen(true);
     }
 
 
@@ -60,8 +70,9 @@ function StudentPage(props) {
             <Button onClick={() => {handleAddStudent()}} className='bg-colorGreenDark hidden lg:inline-block'>Add New Student</Button>
             <Button onClick={() => {handleAddStudent()}} className='lg:hidden px-0 py-0' ><CiCirclePlus size={30} /></Button>
          </div>
-          {students.length > 0 && <StudentsTable students={students}/>} 
-         {isModalOpen && <StudentModal closeModal={closeModal} />}
+          {students.length > 0 && <StudentsTable handleEdit={handleEdit} students={students}/>} 
+         {isModalOpen && <StudentModal editStudent={editingStudent ? editingStudent : null} closeModal={closeModal} />}
+         
         </>
        
     );

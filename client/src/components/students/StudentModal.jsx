@@ -8,7 +8,7 @@ import {Form ,useNavigation ,useActionData ,useNavigate} from 'react-router-dom'
 import useFetch from '../../hooks/useFetch';
 import axios from 'axios';
 
-function StudentModal({closeModal}) {
+function StudentModal({closeModal ,editStudent}) {
 
   const { data:classrooms , isLoading , error } = useFetch("http://localhost:5251/api/Classrooms");
 
@@ -40,6 +40,7 @@ function StudentModal({closeModal}) {
           isValidated: false,
           errorFormName: "First name",
           error: "",
+          value: ""
         },
         {
           id: "last-name",
@@ -50,6 +51,7 @@ function StudentModal({closeModal}) {
           isValidated: false,
           errorFormName: "Last name",
           error: "",
+          value: ""
         },
         {
           id: "email",
@@ -60,6 +62,7 @@ function StudentModal({closeModal}) {
           isValidated: false,
           errorFormName: "Email",
           error: "",
+          value: ""
         },
         {
           id: "contact-person",
@@ -70,6 +73,7 @@ function StudentModal({closeModal}) {
           isValidated: false,
           errorFormName: "Contact Person",
           error: "",
+          value: ""
         },
         {
             id: "contact-number",
@@ -80,6 +84,7 @@ function StudentModal({closeModal}) {
             isValidated: false,
             errorFormName: "Contact Number",
             error: "",
+            value: ""
           },
           {
             id: "dob",
@@ -90,6 +95,7 @@ function StudentModal({closeModal}) {
             isValidated: false,
             errorFormName: "Date of Birth",
             error: "",
+            value: ""
           },
           {
             id: "classroom",
@@ -100,15 +106,36 @@ function StudentModal({closeModal}) {
             isValidated: false,
             errorFormName: "Classroom",
             error: "",
+            value: ""
           },
       ]);
+
+     useEffect(() => {
+      if(editStudent){
+        setForm(prevForm => {
+          let newForm = [...prevForm];
+          newForm[0].value = editStudent.FirstName;
+          newForm[1].value = editStudent.LastName;
+          newForm[2].value = editStudent.EmailAddress;
+          newForm[3].value = editStudent.ContactPerson;
+          newForm[4].value = editStudent.ContactNo;
+          newForm[5].value = editStudent.DateOfBirth;
+          newForm[6].value = editStudent.ClassName;
+  
+          return newForm;
+  
+        })
+      } 
+     }, [editStudent]); 
+
+     
 
     return (
         <div className="absolute inset-0 p-5  lg:p-0 bg-black bg-opacity-30 backdrop-blur-sm mx-auto z-20 flex justify-center items-center">
             <div className="lg:w-1/2 max-h-[30rem] bg-zinc-900 rounded-md flex flex-col  p-4 py-7  ">
                 
                     <div className='px-8  w-full flex justify-between items-center'>
-                        <h2>Add New Student</h2>
+                        <h2>{editStudent ?'Update Student' : 'Add New Student'}</h2>
                         <MdClose onClick={() => closeModal()} size={18} className="opacity-50 hover:opacity-100 cursor-pointer" />
                     </div>
                     
@@ -141,6 +168,7 @@ function StudentModal({closeModal}) {
                           isValidated={_form.isValidated}
                           error={_form.error}
                           classrooms={classrooms}
+                          value={_form.value}
 
                         />
                       );
@@ -150,12 +178,15 @@ function StudentModal({closeModal}) {
                     
                   </div>
                   <div className='px-8'>
-                  <button
-                      
-                      className="bg-colorBlue font-semibold text-sm text-white py-2  rounded-lg text-center w-full uppercase "
-                    >
+                  {editStudent && <button className="bg-orange-500 font-semibold text-sm text-white py-2  rounded-lg text-center w-full uppercase ">
+                      {isAddingStudent ? "Updating Student" : "Update"} 
+                    </button>}
+                   {editStudent == null && <button className="bg-colorBlue font-semibold text-sm text-white py-2  rounded-lg text-center w-full uppercase ">
                       {isAddingStudent ? "Adding Student" : "Add Student"} 
-                    </button>
+                    </button>} 
+                  
+
+
                   </div>
                  
                 </Form>

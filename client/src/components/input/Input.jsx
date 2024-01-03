@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
 
 export default function Input({
     id,
@@ -7,14 +6,11 @@ export default function Input({
     type,
     placeholder,
     isValidated,
-    classrooms
+    classrooms,
+    value
     // error,
 }) {
-    const [value, setValue] = useState("");
-    function handleChange(event) {
-        setValue(event.target.value);
-    }
-
+    
     function inputClass() {
         const defaultClass = [
             "font-semibold",
@@ -56,25 +52,25 @@ export default function Input({
                     type={type}
                     id={id}
                     name={name}
-                    value={value}
-                    onChange={handleChange}
+                    defaultValue={value}
+                    
                     placeholder={placeholder}
                     className={inputClass()}         
                     onFocus={(e) => (e.target.type = "date")}
                     onBlur={(e) => (e.target.type = "text")}
                     
                 />}
-                {id == 'classroom' ? <select name={name} className={inputClass()}  >
-                <option disabled={true} value="">Select a Classroom</option>
+                {id == 'classroom' ? <select name={name}  className={inputClass()}  >
+                <option disabled={true} selected={value == ""} hidden >Select a Classroom</option>
                 {classrooms.map(classroom => (
-                    <option key={classroom.ClassroomId} value={classroom.ClassroomId}>{classroom.ClassName}</option>
+                    <option key={classroom.ClassroomId} value={classroom.ClassroomId} selected={classroom.ClassName == value} >{classroom.ClassName}</option>
                 ))}
                 </select> : (id != 'dob' && id != 'classroom') ?  <input
                 type={type}
                 id={id}
                 name={name}
-                value={value}
-                onChange={handleChange}
+                defaultValue={value}
+                
                 placeholder={placeholder}
                 className={inputClass()}              
                 
