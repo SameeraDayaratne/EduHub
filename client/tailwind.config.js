@@ -14,6 +14,7 @@ export default {
         'activeNavLinkHover': "rgba(249,249,249, 0.03)",
         'colorGreenDark': "#27AE60",
         'activeNavLink': "rgba(249,249,249, 0.08)",
+        'colorBlue': "#7263F3",
         
       }
     },
