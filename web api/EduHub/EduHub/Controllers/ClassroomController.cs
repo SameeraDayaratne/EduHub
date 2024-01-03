@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace EduHub.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Classrooms")]
     [ApiController]
     public class ClassroomController : Controller
     {
