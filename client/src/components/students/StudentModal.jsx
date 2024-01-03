@@ -112,6 +112,7 @@ function StudentModal({closeModal ,editStudent}) {
 
      useEffect(() => {
       if(editStudent){
+        console.log('ed' ,editStudent);
         setForm(prevForm => {
           let newForm = [...prevForm];
           newForm[0].value = editStudent.FirstName;
@@ -140,7 +141,7 @@ function StudentModal({closeModal ,editStudent}) {
                     </div>
                     
                     <Form
-                  method="post"
+                  method={editStudent ? "put":"post"}
                   action="/students"
                   className="rounded-lg shadow-hard-gray"
                 >
@@ -157,6 +158,7 @@ function StudentModal({closeModal ,editStudent}) {
                         {data.error.message}
                       </p>
                     )} */}
+                    {editStudent && <input name='editStuId' hidden value={editStudent.StudentId} readOnly />}
                     {form.map((_form, _index) => {
                       return (
                         <Input

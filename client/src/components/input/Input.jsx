@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
 
 export default function Input({
     id,
@@ -10,6 +11,8 @@ export default function Input({
     value
     // error,
 }) {
+
+    const [myValue, setMyValue] = useState('');
     
     function inputClass() {
         const defaultClass = [
@@ -30,6 +33,13 @@ export default function Input({
                   "border-primary-red-500",
               ].join(" ")
             : [...defaultClass, "pr-6" ,"place-self-center",].join(" ");
+    }
+    let foundClassroom = null;
+
+    if(id == 'classroom' && classrooms)
+    {
+         foundClassroom = classrooms.find(classroom => classroom.ClassName === value); 
+         console.log('founde' , foundClassroom);
     }
 
     // const errorIcon = isShow => {
@@ -60,10 +70,10 @@ export default function Input({
                     onBlur={(e) => (e.target.type = "text")}
                     
                 />}
-                {id == 'classroom' ? <select name={name}  className={inputClass()}  >
-                <option disabled={true} selected={value == ""} hidden >Select a Classroom</option>
+                {id == 'classroom' ? <select name={name} value={foundClassroom && foundClassroom.ClassroomId} onChange={(e) => setMyValue(e.target.value)}   className={inputClass()}  >
+                <option disabled={true} >Select a Classroom</option>
                 {classrooms.map(classroom => (
-                    <option key={classroom.ClassroomId} value={classroom.ClassroomId} selected={classroom.ClassName == value} >{classroom.ClassName}</option>
+                    <option key={classroom.ClassroomId} value={classroom.ClassroomId}  >{classroom.ClassName}</option>
                 ))}
                 </select> : (id != 'dob' && id != 'classroom') ?  <input
                 type={type}

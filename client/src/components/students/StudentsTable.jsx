@@ -5,7 +5,7 @@ import React, { useMemo } from 'react';
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
 
-function StudentsTable({students , handleEdit}) {
+function StudentsTable({students , handleEdit ,handleDelete}) {
 
     /* 
      {
