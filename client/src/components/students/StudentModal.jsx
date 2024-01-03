@@ -5,9 +5,12 @@ import { MdClose } from "react-icons/md";
 import { useState } from 'react';
 import Input from '../input/input';
 import {Form} from 'react-router-dom'
+import useFetch from '../../hooks/useFetch';
 
 function StudentModal({closeModal}) {
 
+  const { data:classrooms , isLoading , error } = useFetch("http://localhost:5251/api/Classrooms");
+  console.log('dat' ,classrooms);
     const [form, setForm] = useState([
         {
           id: "first-name",
@@ -117,6 +120,7 @@ function StudentModal({closeModal}) {
                           placeholder={_form.placeholder}
                           isValidated={_form.isValidated}
                           error={_form.error}
+                          classrooms={classrooms}
 
                         />
                       );

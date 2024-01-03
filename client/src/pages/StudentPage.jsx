@@ -10,7 +10,7 @@ import useFetch from '../hooks/useFetch';
 function StudentPage(props) {
 
     const [isModalOpen , setIsModalOpen] = useState(false);
-    const { data:students , isLoading , error } = useFetch("http://localhost:5251/api/Students")
+    const { data:students , isLoading , error } = useFetch("http://localhost:5251/api/Students");
 
     console.log('d' , students.length);
 

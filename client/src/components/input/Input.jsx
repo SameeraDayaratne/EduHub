@@ -7,6 +7,7 @@ export default function Input({
     type,
     placeholder,
     isValidated,
+    classrooms
     // error,
 }) {
     const [value, setValue] = useState("");
@@ -63,16 +64,20 @@ export default function Input({
                     onBlur={(e) => (e.target.type = "text")}
                     
                 />}
-                {id != 'dob' && <input
-                    type={type}
-                    id={id}
-                    name={name}
-                    value={value}
-                    onChange={handleChange}
-                    placeholder={placeholder}
-                    className={inputClass()}              
-                    
-                />}
+                {id == 'classroom' ? <select className={inputClass()}  >
+                {classrooms.map(classroom => (
+                    <option key={classroom.ClassroomId} value={classroom.ClassroomId}>{classroom.ClassName}</option>
+                ))}
+                </select> : (id != 'dob' && id != 'classroom') ?  <input
+                type={type}
+                id={id}
+                name={name}
+                value={value}
+                onChange={handleChange}
+                placeholder={placeholder}
+                className={inputClass()}              
+                
+            /> : ''}
                 {/* {errorIcon(isValidated)} */}
             </div>
             {/* <p className="text-right text-primary-red-500 italic font-semibold text-xs">
