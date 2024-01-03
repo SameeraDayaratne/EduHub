@@ -39,6 +39,8 @@ namespace EduHub.Controllers
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
+                DateTime DateOfBirthDT = Convert.ToDateTime(dt.Rows[i]["DateOfBirth"]);
+                string formattedDate = DateOfBirthDT.ToString("yyyy/MM/dd");
                 var student = new
                 {
                     StudentId = Convert.ToInt32(dt.Rows[i]["StudentId"]),
@@ -47,7 +49,7 @@ namespace EduHub.Controllers
                     ContactPerson = dt.Rows[i]["ContactPerson"].ToString(),
                     ContactNo = Convert.ToInt64(dt.Rows[i]["ContactNo"]),
                     EmailAddress = dt.Rows[i]["EmailAddress"].ToString(),
-                    DateOfBirth = Convert.ToDateTime(dt.Rows[i]["DateOfBirth"]),
+                    DateOfBirth = formattedDate,
                     ClassName = dt.Rows[i]["ClassName"].ToString(),
                     Age = Convert.ToInt32(dt.Rows[i]["Age"])
                 };
@@ -73,6 +75,7 @@ namespace EduHub.Controllers
                 INSERT INTO Students (FirstName, LastName, ContactPerson, ContactNo, EmailAddress, DateOfBirth, Age, ClassroomId)
                 VALUES ('{student.FirstName}', '{student.LastName}', '{student.ContactPerson}', '{student.ContactNo}', '{student.EmailAddress}', '{student.DateOfBirth}', {student.Age}, {student.ClassroomId});
             ";
+
 
             _command = new SqlCommand(query, _connection);
             _connection.Open();
