@@ -30,7 +30,9 @@ function Sidebar(props) {
                 </div>
                 <ul className='flex flex-col'>
                     <li className={`${navItemClass} ${pathName == 'students' && 'bg-activeNavLink before:w-1 text-white'} `}><PiStudent/><NavLink to='students' className={({isActive}) => (isActive ? 'text-white' : 'z-20')} >Students</NavLink></li> 
+                    <li className={`${navItemClass} ${pathName == 'classrooms' && 'bg-activeNavLink before:w-1 text-white'} `}><FaChalkboardTeacher/> <NavLink to='classrooms' className={({isActive}) => (isActive ? 'text-white' : 'z-20')}>Classrooms</NavLink></li> 
                    <li className={`${navItemClass} ${pathName == 'teachers' && 'bg-activeNavLink before:w-1 text-white'} `}><FaChalkboardTeacher/> <NavLink to='teachers' className={({isActive}) => (isActive ? 'text-white' : 'z-20')}>Teachers</NavLink></li> 
+                   <li className={`${navItemClass} ${pathName == 'Subjects' && 'bg-activeNavLink before:w-1 text-white'} `}><FaChalkboardTeacher/> <NavLink to='Subjects' className={({isActive}) => (isActive ? 'text-white' : 'z-20')}>Subjects</NavLink></li> 
                    
                 </ul>
                 <div>

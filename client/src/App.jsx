@@ -3,6 +3,9 @@ import StudentPage from "./pages/StudentPage"
 import TeachersPage from "./pages/TeachersPage"
 import {action as handleStudentCreation} from './pages/StudentPage'
 import {createBrowserRouter , RouterProvider} from 'react-router-dom'
+import ClassroomPage, { action } from "./pages/ClassroomPage"
+import SubjectsPage from "./pages/SubjectsPage"
+import {action as handleClassroomActions} from './pages/ClassroomPage'
 
 
 const router = createBrowserRouter([
@@ -11,7 +14,9 @@ const router = createBrowserRouter([
     element : <Sidebar />,
     children : [
       {path : 'students' , element : <StudentPage /> ,  action : handleStudentCreation},
-      {path : 'teachers' , element : <TeachersPage />}
+      {path : 'teachers' , element : <TeachersPage />},
+      {path : 'classrooms' , element : <ClassroomPage />, action:handleClassroomActions},
+      {path : 'subjects' , element : <SubjectsPage />}
     ]
   }
 ])

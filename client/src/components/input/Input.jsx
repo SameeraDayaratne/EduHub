@@ -12,6 +12,7 @@ export default function Input({
     // error,
 }) {
 
+    // eslint-disable-next-line no-unused-vars
     const [myValue, setMyValue] = useState('');
     
     function inputClass() {
@@ -85,11 +86,9 @@ export default function Input({
                 className={inputClass()}              
                 
             /> : ''}
-                {/* {errorIcon(isValidated)} */}
+              
             </div>
-            {/* <p className="text-right text-primary-red-500 italic font-semibold text-xs">
-                {isValidated ? error : ""}{" "}
-            </p> */}
+           
         </div>
     );
 }

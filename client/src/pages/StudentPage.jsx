@@ -104,14 +104,7 @@ export async function action({ request, params }) {
     
     const method = request.method;
     const formData = await request.formData();
-    
-    console.log('meths' , method);
-    
   
-    
-  
-    
-
     if(method == 'POST')
     {
         const birthdateString = formData.get("dob");
@@ -175,48 +168,4 @@ export async function action({ request, params }) {
           }
     }
 
-  
-    // console.log('addded' , student);
-     
-
-
-    
-    
-  
-
-  
-   
-  
-    // try {
-    //   const response = await auth.post("/login", user , {withCredentials : true});
-  
-    //   let responseOK = response && response.status === 200 && response.statusText === "OK";
-    //   if(responseOK)
-    //   {
-    //       const accessToken =  response.data.accessToken;
-    //       localStorage.setItem('accessToken' , accessToken);
-    //       // console.log(response.data);
-    //       return response.data;
-    //       // return redirect('/');
-    //   }
-    // } catch (error) {
-    //   if (error.response) {
-    //     // The request was made and the server responded with a status code
-    //     // that falls out of the range of 2xx
-    //     // console.log(error.response.data);
-    //     // console.log(error.response.status);
-    //     // console.log(error.response.headers);
-    //     return error.response.data;
-    //   } else if (error.request) {
-    //     // The request was made but no response was received
-    //     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-    //     // http.ClientRequest in node.js
-    //     return error.response.data;
-    //   } else {
-    //     // Something happened in setting up the request that triggered an Error
-    //     // console.log('Error', error.message);
-  
-    //     return error.response.data;
-    //   }
-    // }
   }

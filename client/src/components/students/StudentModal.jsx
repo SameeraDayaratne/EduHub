@@ -4,9 +4,8 @@ import React, { useEffect } from 'react';
 import { MdClose } from "react-icons/md";
 import { useState } from 'react';
 import Input from '../input/input';
-import {Form ,useNavigation ,useActionData ,useNavigate} from 'react-router-dom'
+import {Form ,useNavigation} from 'react-router-dom'
 import useFetch from '../../hooks/useFetch';
-import axios from 'axios';
 
 function StudentModal({closeModal ,editStudent}) {
 
