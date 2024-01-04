@@ -74,7 +74,7 @@ function AllocateClassroomsPage(props) {
             </select>
             </div>
             <div className='flex  gap-2 items-center'>
-            <h2>Select a Subject</h2>
+            <h2>Select a Classroom</h2>
             <select name="classrooms" className="font-semibold text-left rounded-md caret-accent-blue-500 focus:outline-none focus:border-accent-blue-500  py-3 pl-8"     >
                 <option disabled={true} >Select a Classroom</option>
                 {classrooms.map(subject => (
