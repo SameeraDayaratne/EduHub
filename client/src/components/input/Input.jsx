@@ -57,7 +57,7 @@ export default function Input({
     // };
 
     return (
-        <div className="w-full last-of-type:col-span-full ">
+        <div className="w-full  ">
             <div className="w-full ">
                 {id == 'dob' && <input
                     type={type}
