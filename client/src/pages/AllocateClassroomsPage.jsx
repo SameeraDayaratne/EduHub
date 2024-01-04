@@ -8,12 +8,12 @@ import AllocateSubjectsTable from '../components/allocateSubjects/allocateSubjec
 import { useState , useEffect } from 'react';
 import {useNavigation ,useActionData ,useNavigate ,redirect} from 'react-router-dom'
 import DeleteConfirmation from '../components/delete/deleteConfirmation';
+import AllocateClassroomTable from '../components/allocateClassroomTable/AllocateClassroomTable';
 
-function AllocateSubjectsPage(props) {
-
+function AllocateClassroomsPage(props) {
     const { data:teachers , isLoadingTeachers , errorTeachers } = useFetch("http://localhost:5251/api/Teachers");
-    const { data:subjects , isLoadingSubjects , errorSubjects } = useFetch("http://localhost:5251/api/Subjects");
-    const { data:allocateSubjects , isLoadingallocateSubjects , errorallocateSubjects ,fetchData } = useFetch("http://localhost:5251/api/AllocateSubjects");
+    const { data:classrooms , isLoadingClassrooms , errorClassrooms} = useFetch("http://localhost:5251/api/Classrooms");
+    const { data:allocateClassrooms , isLoadingallocateClassrooms , errorallocateClassrooms ,fetchData } = useFetch("http://localhost:5251/api/AllocateClassrooms");
     const [isDeleteConfirmationOpen , setIsDeleteConfirmationOpen ] = useState(false);
     const [deletingAllocatedSubject, setdDeletingAllocatedSubject] = useState(null);
 
@@ -23,21 +23,17 @@ function AllocateSubjectsPage(props) {
 
     useEffect(()=> {
         
-        if((data && data.Message) && (data.Message == 'AllocateSubject Created' || data.Message == 'AllocateSubject Deleted') ) 
+        if((data && data.Message) && (data.Message == 'AllocateClassroom Created' || data.Message == 'AllocateClassroom Deleted') ) 
         {
             console.log('data call');
-            fetchData("http://localhost:5251/api/AllocateSubjects");
+            fetchData("http://localhost:5251/api/AllocateClassrooms");
         }
 
     },[data,fetchData]);
 
-    
-    
-  
-
     useEffect(()=> {
         
-        if((data && data.Message) && (data.Message == 'AllocateSubject Deleted')) 
+        if((data && data.Message) && (data.Message == 'AllocateClassroom Deleted')) 
         {
             
                 setIsDeleteConfirmationOpen(false)
@@ -48,7 +44,7 @@ function AllocateSubjectsPage(props) {
 
     function handleDelete(data) {
         console.log('dasa' , data);
-        setdDeletingAllocatedSubject(data.AllocateSubjectId);
+        setdDeletingAllocatedSubject(data.AllocateClassroomId);
         setIsDeleteConfirmationOpen(true);
         console.log('dek' , data);
     }
@@ -59,7 +55,7 @@ function AllocateSubjectsPage(props) {
     return (
         <>
         <div className='flex justify-center items-center'>
-           <span className=' relative pb-1 after:content-[""] after:absolute after:left-10   after:bottom-0 after:border-[2px] after:rounded-2xl after:border-colorGreenDark after:w-[50%] text-xl'>Allocate Subjects</span>
+           <span className=' relative pb-1 after:content-[""] after:absolute after:left-10   after:bottom-0 after:border-[2px] after:rounded-2xl after:border-colorGreenDark after:w-[50%] text-xl'>Allocate Classrooms</span>
         </div>
         
          <Form
@@ -79,10 +75,10 @@ function AllocateSubjectsPage(props) {
             </div>
             <div className='flex  gap-2 items-center'>
             <h2>Select a Subject</h2>
-            <select name="subjects" className="font-semibold text-left rounded-md caret-accent-blue-500 focus:outline-none focus:border-accent-blue-500  py-3 pl-8"     >
-                <option disabled={true} >Select a Subject</option>
-                {subjects.map(subject => (
-                    <option key={subject.SubjectId} value={subject.SubjectId}  >{subject.SubjectName}</option>
+            <select name="classrooms" className="font-semibold text-left rounded-md caret-accent-blue-500 focus:outline-none focus:border-accent-blue-500  py-3 pl-8"     >
+                <option disabled={true} >Select a Classroom</option>
+                {classrooms.map(subject => (
+                    <option key={subject.ClassroomId} value={subject.ClassroomId}  >{subject.ClassName}</option>
                 ))}
         </select>
             </div>
@@ -95,13 +91,13 @@ function AllocateSubjectsPage(props) {
         </div> */}
         
         </Form>   
-        {allocateSubjects.length > 0 && <AllocateSubjectsTable handleDelete={handleDelete} allocateSubjects={allocateSubjects}/>} 
-        {isDeleteConfirmationOpen && <DeleteConfirmation actionRoute="/allocateSubjects" recordId={deletingAllocatedSubject} handleDeleteCancel={handleDeleteCancel} />}
+        {allocateClassrooms.length > 0 && <AllocateClassroomTable handleDelete={handleDelete} allocateClassrooms={allocateClassrooms}/>} 
+        {isDeleteConfirmationOpen && <DeleteConfirmation actionRoute="/allocateClassrooms" recordId={deletingAllocatedSubject} handleDeleteCancel={handleDeleteCancel} />}
         </>
     );
 }
 
-export default AllocateSubjectsPage;
+export default AllocateClassroomsPage;
 
 export async function action({ request, params }) {
     
@@ -109,16 +105,16 @@ export async function action({ request, params }) {
     const formData = await request.formData();
     if(method == 'POST')
     {
-        const allocatedSubject = {
+        const allocatedClassroom = {
             teacherId : formData.get("teachers"),  
-            subjectId: formData.get("subjects")
+            classroomId: formData.get("classrooms")
     
           };
     
-        console.log('allocat' , allocatedSubject);
+        console.log('allocat' , allocatedClassroom);
     
             try {
-                const response = await axios.post("http://localhost:5251/api/AllocateSubjects", allocatedSubject);
+                const response = await axios.post("http://localhost:5251/api/AllocateClassrooms", allocatedClassroom);
                 console.log(response.data);
                 return response.data;
               } catch (error) {
@@ -127,10 +123,10 @@ export async function action({ request, params }) {
     }
     else if(method == 'DELETE')
     {
-        const alloSubId = formData.get("delRecId");
-        console.log('delid' + alloSubId);
+        const alloclassId = formData.get("delRecId");
+        console.log('delid' + alloclassId);
         try {
-            const response = await axios.delete(`http://localhost:5251/api/AllocateSubjects/${alloSubId}`);
+            const response = await axios.delete(`http://localhost:5251/api/AllocateClassrooms/${alloclassId}`);
             console.log(response.data);
             return response.data;
           } catch (error) {

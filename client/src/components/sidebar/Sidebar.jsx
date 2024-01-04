@@ -34,6 +34,7 @@ function Sidebar(props) {
                    <li className={`${navItemClass} ${pathName == 'teachers' && 'bg-activeNavLink before:w-1 text-white'} `}><FaChalkboardTeacher/> <NavLink to='teachers' className={({isActive}) => (isActive ? 'text-white' : 'z-20')}>Teachers</NavLink></li> 
                    <li className={`${navItemClass} ${pathName == 'Subjects' && 'bg-activeNavLink before:w-1 text-white'} `}><FaChalkboardTeacher/> <NavLink to='Subjects' className={({isActive}) => (isActive ? 'text-white' : 'z-20')}>Subjects</NavLink></li> 
                    <li className={`${navItemClass} ${pathName == 'allocateSubjects' && 'bg-activeNavLink before:w-1 text-white'} `}><FaChalkboardTeacher/> <NavLink to='allocateSubjects' className={({isActive}) => (isActive ? 'text-white' : 'z-20')}>Allocate Subjects</NavLink></li> 
+                   <li className={`${navItemClass} ${pathName == 'allocateClassrooms' && 'bg-activeNavLink before:w-1 text-white'} `}><FaChalkboardTeacher/> <NavLink to='allocateClassrooms' className={({isActive}) => (isActive ? 'text-white' : 'z-20')}>Allocate Classrooms</NavLink></li> 
                 </ul>
                 <div>
                     <h2>Developed by Sameera Dayaratne</h2>

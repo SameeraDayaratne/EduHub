@@ -7,6 +7,7 @@ import ClassroomPage from "./pages/ClassroomPage"
 import SubjectsPage, {action as handleSubjectActions} from "./pages/SubjectsPage"
 import {action as handleClassroomActions} from './pages/ClassroomPage'
 import AllocateSubjectsPage , {action as handleAllocateSubjects} from "./pages/AllocateSubjectsPage"
+import AllocateClassroomsPage ,  {action as handleAllocateClassrooms} from "./pages/AllocateClassroomsPage"
 
 
 
@@ -19,7 +20,8 @@ const router = createBrowserRouter([
       {path : 'teachers' , element : <TeachersPage /> , action : handleTeacherActions},
       {path : 'classrooms' , element : <ClassroomPage />, action:handleClassroomActions},
       {path : 'subjects' , element : <SubjectsPage /> , action: handleSubjectActions},
-      {path : 'allocateSubjects' , element : <AllocateSubjectsPage />, action : handleAllocateSubjects }
+      {path : 'allocateSubjects' , element : <AllocateSubjectsPage />, action : handleAllocateSubjects },
+      {path : 'allocateClassrooms' , element : <AllocateClassroomsPage />, action : handleAllocateClassrooms }
     ]
   }
 ])

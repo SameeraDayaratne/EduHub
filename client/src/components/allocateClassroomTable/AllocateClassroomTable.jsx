@@ -9,14 +9,14 @@ import { MdNavigateBefore } from "react-icons/md";
 import { MdLastPage } from "react-icons/md";
 import { MdFirstPage } from "react-icons/md";
 
-function AllocateSubjectsTable({allocateSubjects ,handleDelete}) {
-    const data = useMemo(() => allocateSubjects , [allocateSubjects]);
+function AllocateClassroomTable({allocateClassrooms ,handleDelete}) {
+    const data = useMemo(() => allocateClassrooms , [allocateClassrooms]);
 
     const columns = [
        
         {
-            header: 'Subject Name',
-            accessorKey : 'SubjectName'
+            header: 'Classroom Name',
+            accessorKey : 'ClassName'
         },
         {
             header: 'Teacher Name',
@@ -53,7 +53,7 @@ function AllocateSubjectsTable({allocateSubjects ,handleDelete}) {
                 ))}
             </tbody>
         </table>
-        {allocateSubjects.length > 10 && <>
+        {allocateClassrooms.length > 10 && <>
             <div className='flex gap-2 justify-center p-3'>
         <button onClick={() => table.setPageIndex(0) }><MdFirstPage size={22} /></button>
         <button disabled={!table.getCanPreviousPage} onClick={() => table.previousPage()}><MdNavigateBefore size={22} /></button>
@@ -67,4 +67,4 @@ function AllocateSubjectsTable({allocateSubjects ,handleDelete}) {
     );
 }
 
-export default AllocateSubjectsTable;
+export default AllocateClassroomTable;
