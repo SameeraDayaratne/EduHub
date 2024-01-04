@@ -8,6 +8,7 @@ import SubjectsPage, {action as handleSubjectActions} from "./pages/SubjectsPage
 import {action as handleClassroomActions} from './pages/ClassroomPage'
 import AllocateSubjectsPage , {action as handleAllocateSubjects} from "./pages/AllocateSubjectsPage"
 import AllocateClassroomsPage ,  {action as handleAllocateClassrooms} from "./pages/AllocateClassroomsPage"
+import StudentDetailReportPage from "./pages/StudentDetailReportPage"
 
 
 
@@ -21,7 +22,8 @@ const router = createBrowserRouter([
       {path : 'classrooms' , element : <ClassroomPage />, action:handleClassroomActions},
       {path : 'subjects' , element : <SubjectsPage /> , action: handleSubjectActions},
       {path : 'allocateSubjects' , element : <AllocateSubjectsPage />, action : handleAllocateSubjects },
-      {path : 'allocateClassrooms' , element : <AllocateClassroomsPage />, action : handleAllocateClassrooms }
+      {path : 'allocateClassrooms' , element : <AllocateClassroomsPage />, action : handleAllocateClassrooms },
+      {path : 'studentDetailReport' , element : <StudentDetailReportPage /> }
     ]
   }
 ])
