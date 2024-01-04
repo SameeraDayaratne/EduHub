@@ -60,7 +60,7 @@ function AllocateClassroomsPage(props) {
         
          <Form
          method="post"
-         action="/allocateSubjects"
+         action="/allocateClassrooms"
          
          >
          <div className='mt-6 flex gap-5 justify-center items-center'>
