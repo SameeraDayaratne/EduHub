@@ -3,8 +3,8 @@ import StudentPage from "./pages/StudentPage"
 import TeachersPage ,{action as handleTeacherActions} from "./pages/TeachersPage"
 import {action as handleStudentCreation} from './pages/StudentPage'
 import {createBrowserRouter , RouterProvider} from 'react-router-dom'
-import ClassroomPage from "./pages/ClassroomPage"
-import SubjectsPage from "./pages/SubjectsPage"
+import ClassroomPage, { action } from "./pages/ClassroomPage"
+import SubjectsPage, {action as handleSubjectActions} from "./pages/SubjectsPage"
 import {action as handleClassroomActions} from './pages/ClassroomPage'
 
 
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
       {path : 'students' , element : <StudentPage /> ,  action : handleStudentCreation},
       {path : 'teachers' , element : <TeachersPage /> , action : handleTeacherActions},
       {path : 'classrooms' , element : <ClassroomPage />, action:handleClassroomActions},
-      {path : 'subjects' , element : <SubjectsPage />}
+      {path : 'subjects' , element : <SubjectsPage /> , action: handleSubjectActions}
     ]
   }
 ])

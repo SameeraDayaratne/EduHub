@@ -1,53 +1,53 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { MdClose } from "react-icons/md";
 import { useState } from 'react';
 import {Form ,useNavigation} from 'react-router-dom'
 import Input from '../../components/input/Input.jsx'
-function ClassroomModal({closeModal ,editClassroom}) {
+
+function SubjectModal({closeModal ,editSubject}) {
     const navigation = useNavigation();
 
-    const isAddingStudent = navigation.state === "submitting";
+    const isAddingSubject = navigation.state === "submitting";
 
     const [form, setForm] = useState([
         {
-          id: "className",
-          name: "className",
+          id: "subjectName",
+          name: "subjectName",
           type: "text",
-          placeholder: "Class Name",
+          placeholder: "Subject Name",
           validate: ["isNotEmpty"],
           isValidated: false,
-          errorFormName: "Class Name",
+          errorFormName: "Subject Name",
           error: "",
           value: ""
         }
-    ])
+    ]);
 
     useEffect(() => {
-        if(editClassroom){
+        if(editSubject){
           setForm(prevForm => {
             let newForm = [...prevForm];
-            newForm[0].value = editClassroom.ClassName;
+            newForm[0].value = editSubject.SubjectName;
             
             return newForm;
     
           })
         } 
-       }, [editClassroom]); 
+       }, [editSubject]); 
     return (
         <div className="absolute inset-0 p-5  lg:p-0 bg-black bg-opacity-30 backdrop-blur-sm mx-auto z-20 flex justify-center items-center">
         <div className="lg:w-1/2 max-h-[30rem] bg-zinc-900 rounded-md flex flex-col  p-4 py-7  ">
             
                 <div className='px-8  w-full flex justify-between items-center'>
-                    <h2>{editClassroom ?'Update Classroom' : 'Add New Classroom'}</h2>
+                    <h2>{editSubject ?'Update Subject' : 'Add New Subject'}</h2>
                     <MdClose onClick={() => closeModal()} size={18} className="opacity-50 hover:opacity-100 cursor-pointer" />
                 </div>
                 
                 <Form
-              method={editClassroom ? "put":"post"}
-              action="/classrooms"
+              method={editSubject ? "put":"post"}
+              action="/subjects"
               className="rounded-lg shadow-hard-gray"
             >
               <div className="grid grid-cols-2 gap-2 px-8 py-5 text-sm  items-center">
@@ -63,7 +63,7 @@ function ClassroomModal({closeModal ,editClassroom}) {
                     {data.error.message}
                   </p>
                 )} */}
-                {editClassroom && <input name='editClassroomId' hidden value={editClassroom.ClassroomId} readOnly />}
+                {editSubject && <input name='editSubjectId' hidden value={editSubject.SubjectId} readOnly />}
                 {form.map((_form, _index) => {
                   return (
                     <Input
@@ -84,11 +84,11 @@ function ClassroomModal({closeModal ,editClassroom}) {
                 
               </div>
               <div className='px-8'>
-              {editClassroom && <button className="bg-orange-500 font-semibold text-sm text-white py-2  rounded-lg text-center w-full uppercase ">
-                  {isAddingStudent ? "Updating Classroom" : "Update Classroom"} 
+              {editSubject && <button className="bg-orange-500 font-semibold text-sm text-white py-2  rounded-lg text-center w-full uppercase ">
+                  {isAddingSubject ? "Updating Subject" : "Update Subject"} 
                 </button>}
-               {editClassroom == null && <button className="bg-colorBlue font-semibold text-sm text-white py-2  rounded-lg text-center w-full uppercase ">
-                  {isAddingStudent ? "Adding Classroom" : "Add Classroom"} 
+               {editSubject == null && <button className="bg-colorBlue font-semibold text-sm text-white py-2  rounded-lg text-center w-full uppercase ">
+                  {isAddingSubject ? "Adding Subject" : "Add Subject"} 
                 </button>} 
               
 
@@ -104,4 +104,4 @@ function ClassroomModal({closeModal ,editClassroom}) {
     );
 }
 
-export default ClassroomModal;
+export default SubjectModal;
