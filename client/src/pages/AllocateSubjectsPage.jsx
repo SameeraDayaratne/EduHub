@@ -70,7 +70,7 @@ function AllocateSubjectsPage(props) {
          action="/allocateSubjects"
          
          >
-         <div className='mt-10 flex gap-5 justify-center items-center'>
+         <div className='mt-5 flex gap-5 justify-center items-center'>
             <div className='flex flex-col gap-4 items-center'>
                 <h2>Select a Teacher</h2>
             <select name="teachers" className="font-semibold rounded-md caret-accent-blue-500 focus:outline-none focus:border-accent-blue-500  py-3 pl-8"     >
