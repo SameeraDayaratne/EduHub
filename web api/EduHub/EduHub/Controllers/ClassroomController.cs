@@ -54,20 +54,60 @@ namespace EduHub.Controllers
 
         // POST api/<ClassroomController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] Classroom classroom)
         {
+            _connection = new SqlConnection(this._configuration.GetConnectionString("DefaultConnection"));
+            string query = $@"
+                INSERT INTO Classroom (ClassName)
+                VALUES ('{classroom.ClassName}');
+            ";
+
+            _command = new SqlCommand(query, _connection);
+            _connection.Open();
+            _command.ExecuteNonQuery();
+            _connection.Close();
+
+
+            return Ok(new { Message = "Classroom Created" });
         }
 
         // PUT api/<ClassroomController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] Classroom classroom)
         {
+            _connection = new SqlConnection(this._configuration.GetConnectionString("DefaultConnection"));
+            string query = $@"
+                UPDATE Classroom
+                SET ClassName = '{classroom.ClassName}'
+                WHERE ClassroomID = {id};
+            ";
+
+            _command = new SqlCommand(query, _connection);
+            _connection.Open();
+            int x = _command.ExecuteNonQuery();
+            if (x > 0)
+            {
+                return Ok(new { Message = "Classroom Updated" });
+            }
+            return BadRequest(new { Message = "Classroom Not Found" });
         }
 
         // DELETE api/<ClassroomController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            _connection = new SqlConnection(this._configuration.GetConnectionString("DefaultConnection"));
+            string query = $@"
+                DELETE from Classroom WHERE ClassroomID = {id}";
+
+            _command = new SqlCommand(query, _connection);
+            _connection.Open();
+            int x = _command.ExecuteNonQuery();
+            if (x > 0)
+            {
+                return Ok(new { Message = "Classroom Deleted" });
+            }
+            return BadRequest(new { Message = "Classroom Not Found" });
         }
     }
 }
