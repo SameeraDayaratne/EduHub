@@ -5,24 +5,59 @@ import { Form } from 'react-router-dom';
 import Button from '../components/button/Button';
 import axios from 'axios';
 import AllocateSubjectsTable from '../components/allocateSubjects/allocateSubjectsTable';
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
+import {useNavigation ,useActionData ,useNavigate ,redirect} from 'react-router-dom'
+import DeleteConfirmation from '../components/delete/deleteConfirmation';
 
 function AllocateSubjectsPage(props) {
 
     const { data:teachers , isLoadingTeachers , errorTeachers } = useFetch("http://localhost:5251/api/Teachers");
     const { data:subjects , isLoadingSubjects , errorSubjects } = useFetch("http://localhost:5251/api/Subjects");
-    const { data:allocateSubjects , isLoadingallocateSubjects , errorallocateSubjects } = useFetch("http://localhost:5251/api/AllocateSubjects");
+    const { data:allocateSubjects , isLoadingallocateSubjects , errorallocateSubjects ,fetchData } = useFetch("http://localhost:5251/api/AllocateSubjects");
     const [isDeleteConfirmationOpen , setIsDeleteConfirmationOpen ] = useState(false);
     const [deletingAllocatedSubject, setdDeletingAllocatedSubject] = useState(null);
     console.log(teachers);
     console.log(subjects);
     console.log(allocateSubjects);
 
+    const data = useActionData()
+ 
+    const navigate = useNavigate();
+
+    useEffect(()=> {
+        
+        if((data && data.Message) && (data.Message == 'AllocateSubject Created' || data.Message == 'AllocateSubject Deleted') ) 
+        {
+            console.log('data call');
+            fetchData("http://localhost:5251/api/AllocateSubjects");
+        }
+
+    },[data,fetchData]);
+
+    
+    
+  
+
+    useEffect(()=> {
+        
+        if((data && data.Message) && (data.Message == 'AllocateSubject Deleted')) 
+        {
+            
+                setIsDeleteConfirmationOpen(false)
+            
+            
+        }
+    },[data,navigate]);
+
     function handleDelete(data) {
         console.log('dasa' , data);
         setdDeletingAllocatedSubject(data.AllocateSubjectId);
         setIsDeleteConfirmationOpen(true);
         console.log('dek' , data);
+    }
+
+    function handleDeleteCancel(){
+        setIsDeleteConfirmationOpen(false)
     }
     return (
         <>
@@ -54,16 +89,17 @@ function AllocateSubjectsPage(props) {
                 ))}
         </select>
             </div>
-        
-        
+            
+            
+            
         </div>
         <div className='flex mt-5 gap-5 justify-center items-center'>
-        <Button className='bg-colorGreenDark rounded-md text-lg px-5'>Allocate</Button>
+        <Button className='bg-colorGreenDark rounded-md font-semibold py-3 px-6 place-self-end items-center'>Allocate</Button>
         </div>
         
         </Form>   
         {allocateSubjects.length > 0 && <AllocateSubjectsTable handleDelete={handleDelete} allocateSubjects={allocateSubjects}/>} 
-        
+        {isDeleteConfirmationOpen && <DeleteConfirmation actionRoute="/allocateSubjects" recordId={deletingAllocatedSubject} handleDeleteCancel={handleDeleteCancel} />}
         </>
     );
 }
@@ -72,25 +108,41 @@ export default AllocateSubjectsPage;
 
 export async function action({ request, params }) {
     
+    const method = request.method;
     const formData = await request.formData();
-
+    if(method == 'POST')
+    {
+        const allocatedSubject = {
+            teacherId : formData.get("teachers"),  
+            subjectId: formData.get("subjects")
     
-    const allocatedSubject = {
-        teacherId : formData.get("teachers"),  
-        subjectId: formData.get("subjects")
+          };
+    
+        console.log('allocat' , allocatedSubject);
+    
+            try {
+                const response = await axios.post("http://localhost:5251/api/AllocateSubjects", allocatedSubject);
+                console.log(response.data);
+                return response.data;
+              } catch (error) {
+                return error.response.data;
+              }
+    }
+    else if(method == 'DELETE')
+    {
+        const alloSubId = formData.get("delRecId");
+        console.log('delid' + alloSubId);
+        try {
+            const response = await axios.delete(`http://localhost:5251/api/AllocateSubjects/${alloSubId}`);
+            console.log(response.data);
+            return response.data;
+          } catch (error) {
+            return error.response.data;
+          }
+    }
+    
+    
 
-      };
-
-    console.log('allocat' , allocatedSubject);
-
-        // try {
-        //     const response = await axios.post("http://localhost:5251/api/subjects", );
-        //     console.log(response.data);
-        //     return response.data;
-        //   } catch (error) {
-        //     return error.response.data;
-        //   }
-
-        return null
+        
     
 }
