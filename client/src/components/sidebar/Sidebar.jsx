@@ -30,7 +30,7 @@ function Sidebar(props) {
                     {isSidebarCollapsed  ? <GiHamburgerMenu onClick={collapesMenu} /> : <FaArrowLeft onClick={collapesMenu}/>}
                 </button>
                 <div className='m-6 pt-4 px-3 relative text-colorGrey0 text-center font-bold'>
-                    <h2>EduHub</h2>
+                    <h2 className=''>EduHub</h2>
                 </div>
                 <ul className='flex flex-col'>
                     <li className={`${navItemClass} ${pathName == 'students' && 'bg-activeNavLink before:w-1 text-white'} `}><PiStudent/><NavLink to='students' className={({isActive}) => (isActive ? 'text-white' : 'z-20')} >Students</NavLink></li> 
@@ -47,6 +47,12 @@ function Sidebar(props) {
             </div>
             <div className='w-full relative bg-themeBg2 border-2 border-borderColor2 rounded-2xl p-8 overflow-auto'>
                 <Outlet />
+                {pathName == '' && <>
+                <div className=' text-colorGreenDark flex gap-3 flex-col justify-center items-center h-[calc(100%-2rem)]'>
+                <h2 className='text-6xl font-bold'>EduHub</h2>
+                <h2>Streamlining Education, Empowering Futures</h2>
+                </div>
+                </>}
             </div>
             
         </div>

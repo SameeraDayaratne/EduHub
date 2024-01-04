@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import useFetch from '../hooks/useFetch';
 import axios from 'axios';
