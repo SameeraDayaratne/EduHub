@@ -33,7 +33,7 @@ namespace EduHub.Controllers
             List<object> allocatedClassrooms = new List<object>();
             _connection = new SqlConnection(this._configuration.GetConnectionString("DefaultConnection"));
 
-            string query = "SELECT AllocateClassrooms.AllocateClassroomId, Teachers.FirstName, Teachers.LastName, Classroom.ClassName FROM AllocateSubjects JOIN Teachers ON AllocateClassrooms.TeacherId = Teachers.TeacherId JOIN Subjects ON AllocateSubjects.ClassroomId = Classroom.ClassroomId";
+            string query = "SELECT AllocateClassrooms.AllocateClassroomId, Teachers.FirstName, Teachers.LastName, Classroom.ClassName FROM AllocateClassrooms JOIN Teachers ON AllocateClassrooms.TeacherId = Teachers.TeacherId JOIN Classroom ON AllocateClassrooms.ClassroomId = Classroom.ClassroomID";
 
             DataTable dt = new DataTable();
             _command = new SqlCommand(query, _connection);
