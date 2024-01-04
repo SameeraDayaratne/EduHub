@@ -9,6 +9,7 @@ import useFetch from '../hooks/useFetch';
 import axios from 'axios';
 import {Form ,useNavigation ,useActionData ,useNavigate ,redirect} from 'react-router-dom'
 import DeleteConfirmation from '../components/delete/deleteConfirmation';
+import RiseLoader from "react-spinners/RiseLoader";
 
 function StudentPage(props) {
 
@@ -90,6 +91,22 @@ function StudentPage(props) {
             <Button onClick={() => {handleAddStudent()}} className='bg-colorGreenDark hidden lg:inline-block'>Add New Student</Button>
             <Button onClick={() => {handleAddStudent()}} className='lg:hidden px-0 py-0' ><CiCirclePlus size={30} /></Button>
          </div>
+         {
+            isLoading ? 
+            <div className='flex justify-center h-[calc(100%-3rem)] items-center'>
+            <RiseLoader
+            color={'#FFF'}
+            loading={isLoading}
+            
+            size={6}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+            </div>
+             : ''
+        
+         }
+         {(!isLoading && error) &&<div className='flex justify-center h-[calc(100%-3rem)] items-center'><h2>Error Occured</h2></div> }
           {students.length > 0 && <StudentsTable handleEdit={handleEdit} handleDelete={handleDelete} students={students}/>} 
          {isModalOpen && <StudentModal editStudent={editingStudent ? editingStudent : null} closeModal={closeModal} />}
          {isDeleteConfirmationOpen && <DeleteConfirmation actionRoute="/students" recordId={deletingStudent} handleDeleteCancel={handleDeleteCancel} />}

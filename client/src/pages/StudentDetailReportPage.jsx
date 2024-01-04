@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useFetch from '../hooks/useFetch';
 import axios from 'axios';
 import StudentDetailReportTable from '../components/StudentDetailReportPage/StudentDetailReportTable';
+import RiseLoader from "react-spinners/RiseLoader";
 
 function StudentDetailReportPage(props) {
     const { data:students , isLoading , error , fetchData } = useFetch("http://localhost:5251/api/studentDetailReport");
@@ -77,9 +78,27 @@ function StudentDetailReportPage(props) {
             </div>
         
         </div>
+        
         <div className='flex justify-between items-center'>
             <span className=' relative pb-1 after:content-[""] after:absolute after:left-0   after:bottom-0 after:border-[2px] after:rounded-2xl after:border-colorGreenDark after:w-[50%] text-xl'>Teacher and subject details</span>
         </div>
+
+        {
+            isLoading ? 
+            <div className=' flex justify-center h-[calc(100%-20rem)] items-center'>
+            <RiseLoader
+            color={'#FFF'}
+            loading={isLoading}
+            
+            size={6}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+            </div>
+             : ''
+        
+         }
+         {(!isLoading && error) &&<div className='flex justify-center h-[calc(100%-20rem)] items-center'><h2>Error Occured</h2></div> }
         {studentDetails.otherDetails.length > 0 && <StudentDetailReportTable  subjectsAndTeachers={studentDetails.otherDetails}/>}
         </>
          

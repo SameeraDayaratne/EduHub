@@ -8,6 +8,7 @@ import AllocateSubjectsTable from '../components/allocateSubjects/allocateSubjec
 import { useState , useEffect } from 'react';
 import {useNavigation ,useActionData ,useNavigate ,redirect} from 'react-router-dom'
 import DeleteConfirmation from '../components/delete/deleteConfirmation';
+import RiseLoader from "react-spinners/RiseLoader";
 
 function AllocateSubjectsPage(props) {
 
@@ -94,7 +95,22 @@ function AllocateSubjectsPage(props) {
        
         </div> */}
         
-        </Form>   
+        </Form> 
+        {
+            isLoadingallocateSubjects ? 
+            <div className='flex justify-center h-[calc(100%-3rem)] items-center'>
+            <RiseLoader
+            color={'#FFF'}
+            loading={isLoadingallocateSubjects}
+            
+            size={6}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+            </div>
+             : ''
+        
+         }  
         {allocateSubjects.length > 0 && <AllocateSubjectsTable handleDelete={handleDelete} allocateSubjects={allocateSubjects}/>} 
         {isDeleteConfirmationOpen && <DeleteConfirmation actionRoute="/allocateSubjects" recordId={deletingAllocatedSubject} handleDeleteCancel={handleDeleteCancel} />}
         </>

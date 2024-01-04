@@ -9,11 +9,12 @@ import { useState , useEffect } from 'react';
 import {useNavigation ,useActionData ,useNavigate ,redirect} from 'react-router-dom'
 import DeleteConfirmation from '../components/delete/deleteConfirmation';
 import AllocateClassroomTable from '../components/allocateClassroomTable/AllocateClassroomTable';
+import RiseLoader from "react-spinners/RiseLoader";
 
 function AllocateClassroomsPage(props) {
-    const { data:teachers , isLoadingTeachers , errorTeachers } = useFetch("http://localhost:5251/api/Teachers");
-    const { data:classrooms , isLoadingClassrooms , errorClassrooms} = useFetch("http://localhost:5251/api/Classrooms");
-    const { data:allocateClassrooms , isLoadingallocateClassrooms , errorallocateClassrooms ,fetchData } = useFetch("http://localhost:5251/api/AllocateClassrooms");
+    const { data:teachers , isLoading:isLoadingTeachers , error:errorTeachers } = useFetch("http://localhost:5251/api/Teachers");
+    const { data:classrooms , isLoading:isLoadingClassrooms , error:errorClassrooms} = useFetch("http://localhost:5251/api/Classrooms");
+    const { data:allocateClassrooms , isLoading:isLoadingallocateClassrooms , error ,fetchData } = useFetch("http://localhost:5251/api/AllocateClassrooms");
     const [isDeleteConfirmationOpen , setIsDeleteConfirmationOpen ] = useState(false);
     const [deletingAllocatedSubject, setdDeletingAllocatedSubject] = useState(null);
 
@@ -89,8 +90,25 @@ function AllocateClassroomsPage(props) {
         {/* <div className='flex mt-5 gap-5 justify-center items-center'>
        
         </div> */}
+         
         
         </Form>   
+        {
+            isLoadingallocateClassrooms ? 
+            <div className='flex justify-center h-[calc(100%-7rem)] items-center'>
+            <RiseLoader
+            color={'#FFF'}
+            loading={isLoadingallocateClassrooms}
+            
+            size={6}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+            </div>
+             : ''
+        
+         }
+         {(!isLoadingallocateClassrooms && error) &&<div className='flex justify-center h-[calc(100%-3rem)] items-center'><h2>Error Occured</h2></div> }
         {allocateClassrooms.length > 0 && <AllocateClassroomTable handleDelete={handleDelete} allocateClassrooms={allocateClassrooms}/>} 
         {isDeleteConfirmationOpen && <DeleteConfirmation actionRoute="/allocateClassrooms" recordId={deletingAllocatedSubject} handleDeleteCancel={handleDeleteCancel} />}
         </>

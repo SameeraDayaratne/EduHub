@@ -1,17 +1,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useCallback } from 'react';
-import StudentsTable from '../components/students/StudentsTable';
 import Button from '../components/button/Button';
 import { CiCirclePlus } from "react-icons/ci";
-import StudentModal from '../components/students/StudentModal';
 import { useState } from 'react';
 import useFetch from '../hooks/useFetch';
 import axios from 'axios';
-import {Form ,useNavigation ,useActionData ,useNavigate ,redirect} from 'react-router-dom'
+import { useActionData ,useNavigate} from 'react-router-dom'
 import DeleteConfirmation from '../components/delete/deleteConfirmation';
 import ClassroomModal from '../components/classrooms/ClassroomModal';
 import ClassroomsTable from '../components/classrooms/ClassroomsTable';
+import RiseLoader from "react-spinners/RiseLoader";
 
 function ClassroomPage(props) {
     const [isModalOpen , setIsModalOpen] = useState(false);
@@ -92,6 +91,22 @@ function ClassroomPage(props) {
             <Button onClick={() => {handleAddClassroom()}} className='bg-colorGreenDark hidden lg:inline-block'>Add New Classroom</Button>
             <Button onClick={() => {handleAddClassroom()}} className='lg:hidden px-0 py-0' ><CiCirclePlus size={30} /></Button>
          </div>
+         {
+            isLoading ? 
+            <div className='flex justify-center h-[calc(100%-3rem)] items-center'>
+            <RiseLoader
+            color={'#FFF'}
+            loading={isLoading}
+            
+            size={6}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+            </div>
+             : ''
+        
+         }
+         {(!isLoading && error) &&<div className='flex justify-center h-[calc(100%-3rem)] items-center'><h2>Error Occured</h2></div> }
           {classrooms.length > 0 && <ClassroomsTable handleEdit={handleEdit} handleDelete={handleDelete} classrooms={classrooms}/>} 
          {isModalOpen && <ClassroomModal editClassroom={editingClassroom ? editingClassroom: null} closeModal={closeModal} />}
          {isDeleteConfirmationOpen && <DeleteConfirmation actionRoute="/classrooms" recordId={deletingClassroom} handleDeleteCancel={handleDeleteCancel} />}

@@ -14,6 +14,10 @@ import ClassroomModal from '../components/classrooms/ClassroomModal';
 import ClassroomsTable from '../components/classrooms/ClassroomsTable';
 import SubjectModal from '../components/subjects/SubjectModal';
 import SubjectTable from '../components/subjects/SubjectTable';
+import RiseLoader from "react-spinners/RiseLoader";
+import { Audio } from 'react-loader-spinner'
+import ClipLoader from "react-spinners/ClipLoader";
+import { GiH2O } from 'react-icons/gi';
 
 
 function SubjectsPage() {
@@ -22,6 +26,7 @@ function SubjectsPage() {
     const [deletingSubject , setdDeletingSubject] = useState(null);
     const [editingSubject , setEditingSubject] = useState(null);
     const { data:subjects , isLoading , error , fetchData } = useFetch("http://localhost:5251/api/Subjects");
+    
 
     const data = useActionData()
  
@@ -96,7 +101,23 @@ function SubjectsPage() {
             <Button onClick={() => {handleAddSubject()}} className='bg-colorGreenDark hidden lg:inline-block'>Add New Subject</Button>
             <Button onClick={() => {handleAddSubject()}} className='lg:hidden px-0 py-0' ><CiCirclePlus size={30} /></Button>
          </div>
-          {subjects.length > 0 && <SubjectTable handleEdit={handleEdit} handleDelete={handleDelete} subjects={subjects}/>} 
+         {
+            isLoading ? 
+            <div className='flex justify-center h-[calc(100%-3rem)] items-center'>
+            <RiseLoader
+            color={'#FFF'}
+            loading={isLoading}
+            
+            size={6}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+            </div>
+             : ''
+        
+         }
+        {(!isLoading && error) &&<div className='flex justify-center h-[calc(100%-3rem)] items-center'><h2>Error Occured</h2></div> } 
+        {(!isLoading && subjects.length > 0) && <SubjectTable handleEdit={handleEdit} handleDelete={handleDelete} subjects={subjects}/>} 
          {isModalOpen && <SubjectModal editSubject={editingSubject ? editingSubject: null} closeModal={closeModal} />}
          {isDeleteConfirmationOpen && <DeleteConfirmation actionRoute="/subjects" recordId={deletingSubject} handleDeleteCancel={handleDeleteCancel} />}
         </>
