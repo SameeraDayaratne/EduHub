@@ -1,4 +1,4 @@
-#SQL queries for Table creation.
+### SQL queries for Table creation.
 
 CREATE TABLE Students (
     StudentID INT PRIMARY KEY IDENTITY(1,1),
